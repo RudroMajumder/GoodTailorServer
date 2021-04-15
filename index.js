@@ -16,6 +16,10 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const servicesCollection = client.db("goodTailor").collection("services");
+  const adminsCollection = client.db("goodTailor").collection("admins");
+  const appointmentsCollection = client.db("goodTailor").collection("appointments");
+  const reviewsCollection = client.db("goodTailor").collection("reviews");
+  
   console.log("COnnected");
 
   app.post('/addService',(req,res)=>{
@@ -32,6 +36,25 @@ client.connect(err => {
     servicesCollection.find({})
     .toArray((err,documents)=>{
       res.send(documents)
+    })
+  })
+
+  app.post('/addAdmin',(req,res)=>{
+    const email = req.body;
+    console.log(email);
+    adminsCollection.insertOne(email)
+    .then(result =>{
+      console.log(result);
+      res.send(result.insertedCount>0);
+    })
+  })
+
+  app.post('/addAppointment',(req,res)=>{
+    const appointmentData = req.body;
+    appointmentsCollection.insertOne(appointmentData)
+    .then(result =>{
+      console.log(result);
+      res.send(result.insertedCount>0);
     })
   })
 
