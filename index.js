@@ -27,6 +27,14 @@ client.connect(err => {
       res.send(result.insertedCount>0);
     })
   })
+
+  app.get('/services',(req,res)=>{
+    servicesCollection.find({})
+    .toArray((err,documents)=>{
+      res.send(documents)
+    })
+  })
+
 });
 
 
