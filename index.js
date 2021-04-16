@@ -68,6 +68,22 @@ client.connect(err => {
     })
   })
 
+  app.post('/addReview',(req,res)=>{
+    const review = req.body;
+    console.log(review)
+    reviewsCollection.insertOne(review)
+    .then( result =>{
+      console.log(result);
+      res.send(result.insertedCount>0)
+    })
+  })
+
+  app.get('/reviews',(req,res)=>{
+    reviewsCollection.find({})
+    .toArray((err,documents)=>{
+      res.send(documents)
+    })
+  })
 });
 
 
