@@ -28,7 +28,6 @@ client.connect(err => {
     console.log(service);
     servicesCollection.insertOne(service)
     .then( result =>{
-      console.log(result);
       res.send(result.insertedCount>0);
     })
   })
@@ -45,7 +44,6 @@ client.connect(err => {
     console.log(email);
     adminsCollection.insertOne(email)
     .then(result =>{
-      console.log(result);
       res.send(result.insertedCount>0);
     })
   })
@@ -54,7 +52,6 @@ client.connect(err => {
     const appointmentData = req.body;
     appointmentsCollection.insertOne(appointmentData)
     .then(result =>{
-      console.log(result);
       res.send(result.insertedCount>0);
     })
   })
@@ -63,14 +60,12 @@ client.connect(err => {
     console.log(req.params.id)
     servicesCollection.deleteOne({_id:ObjectID(req.params.id)})
     .then( (result)=>{
-      console.log(result)
       res.redirect(req.originalUrl)
     })
   })
 
   app.post('/addReview',(req,res)=>{
     const review = req.body;
-    console.log(review)
     reviewsCollection.insertOne(review)
     .then( result =>{
       console.log(result);
@@ -82,6 +77,45 @@ client.connect(err => {
     reviewsCollection.find({})
     .toArray((err,documents)=>{
       res.send(documents)
+    })
+  })
+
+  app.patch('/update/:id',(req,res)=>{
+    const status = req.body;
+    console.log(status)
+    // appointmentsCollection.updateOne({_id:ObjectID(req.params.id)},
+    // {
+    //   $set:{status:req.body.status}
+    // })
+    // .then(result=>{
+    //   console.log(result);
+    // })
+  })
+
+  app.post('/appointments',(req,res)=>{
+    const email = req.body.email;
+    adminsCollection.find({email:email})
+    .toArray((err,result)=>{
+        if(result.length>0){
+          appointmentsCollection.find({})
+          .toArray((err,documents)=>{
+            res.send(documents)
+          })
+        }
+        else{
+          appointmentsCollection.find({email:email})
+          .toArray((err,documents)=>{
+            res.send(documents)
+          })
+        }
+    })
+  })
+
+  app.post('/isAdmin',(req,res)=>{
+    const email = req.body.email;
+    adminsCollection.find({email:email})
+    .toArray((err,documents)=>{
+      res.send(documents.length>0)
     })
   })
 });
