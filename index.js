@@ -25,7 +25,7 @@ client.connect(err => {
 
   app.post('/addService',(req,res)=>{
     const service = req.body;
-    console.log(service);
+    // console.log(service);
     servicesCollection.insertOne(service)
     .then( result =>{
       res.send(result.insertedCount>0);
@@ -41,7 +41,7 @@ client.connect(err => {
 
   app.post('/addAdmin',(req,res)=>{
     const email = req.body;
-    console.log(email);
+    // console.log(email);
     adminsCollection.insertOne(email)
     .then(result =>{
       res.send(result.insertedCount>0);
@@ -57,7 +57,7 @@ client.connect(err => {
   })
 
   app.delete('/delete/:id',(req,res)=>{
-    console.log(req.params.id)
+    // console.log(req.params.id)
     servicesCollection.deleteOne({_id:ObjectID(req.params.id)})
     .then( (result)=>{
       res.redirect(req.originalUrl)
@@ -68,7 +68,7 @@ client.connect(err => {
     const review = req.body;
     reviewsCollection.insertOne(review)
     .then( result =>{
-      console.log(result);
+      // console.log(result);
       res.send(result.insertedCount>0)
     })
   })
