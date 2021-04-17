@@ -80,16 +80,19 @@ client.connect(err => {
     })
   })
 
-  app.patch('/update/:id',(req,res)=>{
-    const status = req.body;
-    console.log(status)
-    // appointmentsCollection.updateOne({_id:ObjectID(req.params.id)},
-    // {
-    //   $set:{status:req.body.status}
-    // })
-    // .then(result=>{
-    //   console.log(result);
-    // })
+  app.patch('/update',(req,res)=>{
+    const request = req.body;
+    const status = req.body.status;
+    const id =req.body.id
+    console.log(status,id)
+    appointmentsCollection.updateOne({_id:ObjectID(id)},
+    {
+      $set:{status:status}
+    })
+    .then(result=>{
+      // console.log(result);
+      res.send(result.modifiedCount>0)
+    })
   })
 
   app.post('/appointments',(req,res)=>{
