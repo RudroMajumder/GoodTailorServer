@@ -2,7 +2,7 @@
 
 To visit the site [click here](https://goodtailor-363c9.web.app).
 
-[Client Side Repo](https://github.com/Porgramming-Hero-web-course/complete-website-client-RudroMajumder).
+[Client Side Repo](https://github.com/RudroMajumder/GoodTailorClient).
 
 The application is create with React.js,Node.js,Express.js and Mongodb.
 
